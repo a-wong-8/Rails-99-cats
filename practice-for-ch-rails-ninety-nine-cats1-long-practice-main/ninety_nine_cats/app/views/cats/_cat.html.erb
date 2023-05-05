@@ -1,1 +1,10 @@
-<% link = type: :index  %>
+<% link = path == :index ? cat_url(cat) : cats_url %>
+<% text = path == :index ? 'link to cat' : 'link to all cats' %>
+
+<ul>
+    <li>Name: <%= cat.name %></li>
+    <li>Birth Date: <%= cat.birth_date  %></li>
+    <li>Color: <%= cat.color %></li>
+    <li>Sex: <%= cat.sex %></li>
+    <a href="<%= link %>"> <%= text %></a>
+</ul>
