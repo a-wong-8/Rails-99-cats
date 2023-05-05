@@ -14,10 +14,22 @@
 class Cat < ApplicationRecord
     CAT_COLORS = ['yellow', 'black', 'white', 'brown', 'orange', 'gray']
     SEX = ['M', 'F']
-    validates :birth_date, :color, :name, :sex, prescence: true
+    validates :birth_date, :color, :name, :sex, presence: true
     validates :color, inclusion: {in: CAT_COLORS}
     validates :sex, inclusion: {in: SEX}
+    validate :birth_date_cannot_be_future
 
+    def birth_date_cannot_be_future
+        # Must check that birth_date is present because `>` will crash if run on
+        # `nil`
+        return unless birth_date.present? && birth_date > Date.today
+    
+        errors.add(:birth_date, "can't be in the future")
+      end
 
+    def age 
+        from_time = :birth_date.ago
+        time_ago_in_words = (from_time)
+    end
 
 end
